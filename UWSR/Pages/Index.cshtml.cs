@@ -12,9 +12,9 @@ namespace Testazor.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            HttpContext.Session.SetString("laba", "Goveinovich");
+            return Redirect("./lnk");
         }
     }
 }
