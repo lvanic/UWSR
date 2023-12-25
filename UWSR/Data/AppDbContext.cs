@@ -12,5 +12,12 @@ namespace UWSR.Data
         {
             Database.EnsureCreated();
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Link>().HasMany<Comment>().WithOne(x => x.Link).OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

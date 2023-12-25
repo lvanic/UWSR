@@ -28,7 +28,7 @@ namespace UWSR.Pages.Lnk
                 return NotFound();
             }
 
-            var link = await _context.Links.FirstOrDefaultAsync(m => m.Id == id);
+            var link = await _context.Links.Include(x => x.Comments).FirstOrDefaultAsync(m => m.Id == id);
             if (link == null)
             {
                 return NotFound();
@@ -38,6 +38,42 @@ namespace UWSR.Pages.Lnk
                 Link = link;
             }
             return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(string handler, int id)
+        {
+            switch (handler)
+            {
+                case "OnPlus":
+                    return await OnPlus(id);
+                case "OnMinus":
+                    return await OnMinus(id);
+                default:
+                    return RedirectToPage("./Index");
+            }
+        }
+
+        public async Task<IActionResult> OnPlus(int id)
+        {
+            var linkDb = await _context.Links.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (linkDb == null)
+            {
+                return Page();
+            }
+            linkDb.Plus++;
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
+        }
+
+        public async Task<IActionResult> OnMinus(int id)
+        {
+            var linkDb = await _context.Links.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (linkDb == null)
+            {
+                return Page();
+            }
+            linkDb.Minus++;
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
         }
     }
 }

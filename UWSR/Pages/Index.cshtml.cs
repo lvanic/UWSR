@@ -14,7 +14,7 @@ namespace Testazor.Pages
 
         public void OnGet()
         {
-
+            HttpContext.Session.SetString("laba", "Goveinovich");
         }
     }
 }

@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
-                    @if (Security.CheckIsAdmin(this.HttpContext))
+                    @if (Security.CheckIsAdmin(this.HttpContext) || Security.CheckIsCommentUser(this.HttpContext, item))
                     {
                         <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>;
                         <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>;

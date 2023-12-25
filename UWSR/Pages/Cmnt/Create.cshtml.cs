@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text;
 using UWSR.Models;
 
 namespace UWSR.Pages.Cmnt
@@ -23,18 +24,21 @@ namespace UWSR.Pages.Cmnt
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            Comment.SessionId = this.HttpContext.Session.Id;
-            if (_context.Comments == null || Comment == null)
+            HttpContext.Session.Set("CreateComment", Encoding.UTF8.GetBytes("true"));
+
+            var link = _context.Links.Where(x => x.Id == id).FirstOrDefault();
+            if (_context.Comments == null || Comment == null || link == null)
             {
                 return Page();
             }
-
+            Comment.SessionId = this.HttpContext.Session.Id;
+            Comment.Link = link;
             _context.Comments.Add(Comment);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Lnk/Index");
         }
     }
 }

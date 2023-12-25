@@ -34,7 +34,6 @@ namespace UWSR.Pages.Auth
             {
                 HttpContext.Session.Set("isAdmin", Encoding.UTF8.GetBytes("true"));
             }
-
             return RedirectToPage("./Index");
         }
     }

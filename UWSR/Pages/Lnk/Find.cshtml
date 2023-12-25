@@ -1,5 +1,5 @@
 ﻿@page
-@model UWSR.Pages.Lnk.IndexModel
+@model UWSR.Pages.Lnk.FindModel
 @using UWSR.Utils
 
 @{
@@ -13,8 +13,17 @@
     {
         <a asp-page="Create">Create New</a>
     }
-    <a asp-page="Find">Find page</a>
 </p>
+<form method="post">
+<div class="form-group">
+    <label asp-for="Search" class="control-label"></label>
+    <input asp-for="Search" class="form-control" />
+    <span asp-validation-for="Search" class="text-danger"></span>
+</div>
+    <div class="form-group">
+        <input type="submit" value="Find" class="btn btn-primary" />
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
